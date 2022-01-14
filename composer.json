@@ -1,0 +1,27 @@
+{
+    "name": "nurschool/notifier",
+    "type": "library",
+    "description": "Notifier component to send notifications via one or more channels (email, SMS, ...) for Nurschool project.",
+    "keywords": ["notifier", "notification", "nurschool"],
+    "homepage": "https://github.com/abbarrasa/nurschool-notifier",
+    "license": "Apache-2.0",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nurschool\\Notifier\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { "Nurschool\\Notifier\\Tests\\": "tests/" }
+    },
+    "authors": [
+        {
+            "name": "Alberto Buitrago Barrasa",
+            "email": "abbarrasa@gmail.com"
+        }
+    ]
+}
