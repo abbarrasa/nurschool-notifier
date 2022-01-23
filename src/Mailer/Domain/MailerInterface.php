@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * This file is part of the Nurschool Notifier component of Nurschool project.
  *
@@ -10,9 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Nurschool\Notifier\Mailer\Provider;
+declare(strict_types=1);
 
-interface ProviderInterface
+namespace Nurschool\Notifier\Mailer\Domain;
+
+interface MailerInterface
 {
-
+    public function sendConfirmationEmail(string $email, string $signedUrl, \DateTimeInterface $expiresAt, array $parameters = []);
+    public function sendResettingPasswordEmail();
 }
