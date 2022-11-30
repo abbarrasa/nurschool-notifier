@@ -1,0 +1,52 @@
+framework:
+    messenger:
+        default_bus: event.bus
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        failure_transport: failed
+
+        serializer:
+            default_serializer: messenger.transport.symfony_serializer
+            symfony_serializer:
+                format: json
+                context: { }
+
+        buses:
+            event.bus:
+                middleware:
+                    - validation
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                serializer: Nurschool\Notifier\Infrastructure\Symfony\Serializer\Messenger\EventSerializer
+                retry_strategy:
+                    max_retries: 3
+                    delay: 1000
+                    multiplier: 1
+                options:
+                    vhost: '%env(MESSENGER_VHOST)%'
+                    exchange:
+                        name: '%env(MESSENGER_EXCHANGE)%'
+                        type: direct
+                    queues:
+                        user.created:
+                            binding_keys: [user.created]
+
+            failed: 'doctrine://default?queue_name=failed'
+            # sync: 'sync://'
+
+        routing:
+            # Route your messages to the transports
+            # 'App\Message\YourMessage': async
+            Nurschool\Notifier\Domain\Event\UserWasCreated: async
+
+
+# when@test:
+#    framework:
+#        messenger:
+#            transports:
+#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
+#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+#                async: 'in-memory://'
